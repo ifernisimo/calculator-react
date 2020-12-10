@@ -2,63 +2,37 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [a, setA] = useState(0);
+  const [a, setA] = useState("0");
   const [b, setB] = useState(null);
   const [action, setAction] = useState(null);
   const [numFlag, setNumFlag] = useState(false);
   const [result, setResult] = useState(null);
 
   const setter = (value) => {
-    if (Number(value)) {
-      if (action === null || numFlag === false) {
-        setA(value);
-        setNumFlag(true);
-      } else {
-        setB(value);
-        setNumFlag(false);
-      }
+    const methods = [
+      "+",
+      "-",
+      "/",
+      "*",
+      "=",
+      "%", // Доля от предидущего числа
+      "ac", //Очистить все
+      "mc", //Очистить память
+      "mr", //Прочитать память
+      "mMinus", //Вычитает значение в буфере из текщего значения на экране и сохраняет в буфер (результат по нажатию mr)
+      "mPlus", //Аналогично только с суммированием
+      "",
+    ];
+
+    const isNumb = /^[0-9]+$/;
+
+    if (methods.includes(value)) {
+      console.log("method");
+    } else if (value.match(isNumb)) {
+      console.log("num");
     } else {
-      return action ? action : setAction(value);
+      console.log("dot");
     }
-  };
-
-  const output = () => {
-    switch (action) {
-      case "+": {
-        const res = a + b;
-        setResult(res);
-        resetVars(res);
-        break;
-      }
-
-      case "/": {
-        const res = a / b;
-        setResult(res);
-        resetVars(res);
-        break;
-      }
-
-      case "*": {
-        const res = a * b;
-        setResult(res);
-        resetVars(res);
-        break;
-      }
-
-      case "-": {
-        setResult(a - b);
-        break;
-      }
-      default:
-        return 0;
-    }
-  };
-
-  const resetVars = (result) => {
-    setA(result);
-    setAction(null);
-    setB(null);
-    setResult(null);
   };
 
   return (
@@ -68,34 +42,34 @@ function App() {
           {a} {action} {b} = {result}
         </span>
         <div className="buttons">
-          <div className="key key_0 dark_gray" onClick={() => setter(0)}>
+          <div className="key key_0 dark_gray" onClick={() => setter("0")}>
             0
           </div>
-          <div className="key key_1 dark_gray" onClick={() => setter(1)}>
+          <div className="key key_1 dark_gray" onClick={() => setter("1")}>
             1
           </div>
-          <div className="key key_2 dark_gray" onClick={() => setter(2)}>
+          <div className="key key_2 dark_gray" onClick={() => setter("2")}>
             2
           </div>
-          <div className="key key_3 dark_gray" onClick={() => setter(3)}>
+          <div className="key key_3 dark_gray" onClick={() => setter("3")}>
             3
           </div>
-          <div className="key key_4 dark_gray" onClick={() => setter(4)}>
+          <div className="key key_4 dark_gray" onClick={() => setter("4")}>
             4
           </div>
-          <div className="key key_5 dark_gray" onClick={() => setter(5)}>
+          <div className="key key_5 dark_gray" onClick={() => setter("5")}>
             5
           </div>
-          <div className="key key_6 dark_gray" onClick={() => setter(6)}>
+          <div className="key key_6 dark_gray" onClick={() => setter("6")}>
             6
           </div>
-          <div className="key key_7 dark_gray" onClick={() => setter(7)}>
+          <div className="key key_7 dark_gray" onClick={() => setter("7")}>
             7
           </div>
-          <div className="key key_8 dark_gray" onClick={() => setter(8)}>
+          <div className="key key_8 dark_gray" onClick={() => setter("8")}>
             8
           </div>
-          <div className="key key_9 dark_gray" onClick={() => setter(9)}>
+          <div className="key key_9 dark_gray" onClick={() => setter("9")}>
             9
           </div>
 
@@ -109,8 +83,11 @@ function App() {
             +
           </div>
 
-          <div className="key key_result dark_gray" onClick={() => output()}>
+          <div className="key key_result dark_gray" onClick={() => setter("=")}>
             =
+          </div>
+          <div className="key key_dot dark_gray" onClick={() => setter(".")}>
+            .
           </div>
         </div>
       </div>
