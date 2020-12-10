@@ -23,7 +23,7 @@ function App() {
       "mPlus", //Аналогично только с суммированием
     ];
 
-    const isNumb = /^[0-9]+$/;
+    const isNumb = RegExp(/^[0-9]+$/);
 
     if (operations.includes(value)) {
       methods(value);
@@ -39,7 +39,9 @@ function App() {
   const digits = (value) => {
     if (!numFlag) {
       if (a[1] !== ".") {
-        a[0] === "0" ? setA(value) : setA(a + value);
+        if (a[a.length - 1] !== "%") {
+          a[0] === "0" ? setA(value) : setA(a + value);
+        }
       } else {
         setA(a + value);
       }
@@ -47,7 +49,9 @@ function App() {
       if (!b) {
         !b ? setB(value) : setB(b + value);
       } else {
-        setB(b + value);
+        if (b[b.length - 1] !== "%") {
+          setB(b + value);
+        }
       }
     }
   };
@@ -61,11 +65,18 @@ function App() {
   };
 
   const perc = () => {
-    setNumFlag(false);
-    if (numFlag) {
-      setA(a + "%");
+    if (!numFlag) {
+      if (a[a.length - 1] !== "%") {
+        setA(a + "%");
+      } else {
+        setA(a);
+      }
     } else {
-      setB(b + "%");
+      if (b[b.length - 1] !== "%") {
+        setB(b + "%");
+      } else {
+        setB(b);
+      }
     }
   };
 
@@ -110,15 +121,6 @@ function App() {
           setNumFlag(false);
           setA(newA / newB);
           resetVar();
-          break;
-        }
-
-        case action: {
-          //Исправить %
-          console.log(action);
-          resetVar();
-          setNumFlag(false);
-
           break;
         }
 

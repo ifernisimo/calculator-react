@@ -10,16 +10,21 @@
   height: 50px;
   background-color: black;
   color: gold;
+  margin: 2rem auto;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
 }
 
 .key{
   display: flex;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   font-size: 24px;
   border-radius: 30px;
   justify-content: center;
   align-items: center;
+  margin: 20px;
 }
 
 .buttons {
@@ -27,6 +32,7 @@
   flex-wrap: wrap;
   margin-top: 1rem;
   display: flex;
+  margin: 0 auto;
 }
 
 .dark_gray{
