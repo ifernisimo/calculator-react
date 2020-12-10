@@ -9,7 +9,7 @@ function App() {
   const [result, setResult] = useState(null);
 
   const setter = (value) => {
-    const methods = [
+    const operations = [
       "+",
       "-",
       "/",
@@ -21,25 +21,89 @@ function App() {
       "mr", //Прочитать память
       "mMinus", //Вычитает значение в буфере из текщего значения на экране и сохраняет в буфер (результат по нажатию mr)
       "mPlus", //Аналогично только с суммированием
-      "",
     ];
 
     const isNumb = /^[0-9]+$/;
 
-    if (methods.includes(value)) {
-      console.log("method");
+    if (operations.includes(value)) {
+      methods(value);
     } else if (value.match(isNumb)) {
-      console.log("num");
+      digits(value);
     } else {
-      console.log("dot");
+      dot();
     }
+  };
+
+  const digits = (value) => {
+    if (!numFlag) {
+      if (a[1] !== ".") {
+        a[0] === "0" ? setA(value) : setA(a + value);
+      } else {
+        setA(a + value);
+      }
+    } else {
+      if (!b) {
+        !b ? setB(value) : setB(b + value);
+      } else {
+        setB(b + value);
+      }
+    }
+  };
+
+  const dot = () => {
+    if (!numFlag) {
+      a[1] !== "." && setA(a + ".");
+    } else {
+      b[1] !== "." && setB(b + ".");
+    }
+  };
+
+  const methods = (value) => {
+    if (value !== "=") {
+      setNumFlag(true);
+      setAction(value);
+    }
+    const newA = Number(a);
+    const newB = Number(b);
+
+    if (a && action && b) {
+      setAction(value);
+      switch (action) {
+        case "=": {
+          resetVar();
+          break;
+        }
+
+        case "+": {
+          setNumFlag(false);
+          setA(newA + newB);
+          resetVar();
+          break;
+        }
+
+        default:
+          return 0;
+      }
+    }
+  };
+
+  const resetVar = () => {
+    setB(null);
+    setAction(null);
+    setResult(null);
   };
 
   return (
     <>
       <div className="calc">
         <span className="output">
-          {a} {action} {b} = {result}
+          {result ? (
+            result
+          ) : (
+            <span>
+              {a} {action} {b}
+            </span>
+          )}
         </span>
         <div className="buttons">
           <div className="key key_0 dark_gray" onClick={() => setter("0")}>
