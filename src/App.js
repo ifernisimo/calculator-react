@@ -81,6 +81,36 @@ function App() {
           break;
         }
 
+        case "-": {
+          setNumFlag(false);
+          setA(newA - newB);
+          resetVar();
+          break;
+        }
+
+        case "*": {
+          setNumFlag(false);
+          setA(newA * newB);
+          resetVar();
+          break;
+        }
+
+        case "/": {
+          setNumFlag(false);
+          setA(newA / newB);
+          resetVar();
+          break;
+        }
+
+        case "%": {
+          //Исправить %
+          setNumFlag(false);
+          const perc = a - (a / 100) * b;
+          setA(perc);
+          resetVar();
+          break;
+        }
+
         default:
           return 0;
       }
@@ -147,11 +177,25 @@ function App() {
             +
           </div>
 
+          <div className="key key_minus dark_gray" onClick={() => setter("-")}>
+            -
+          </div>
+
           <div className="key key_result dark_gray" onClick={() => setter("=")}>
             =
           </div>
           <div className="key key_dot dark_gray" onClick={() => setter(".")}>
             .
+          </div>
+          <div
+            className="key key_separate dark_gray"
+            onClick={() => setter("/")}
+          >
+            /
+          </div>
+
+          <div className="key key_perc dark_gray" onClick={() => setter("%")}>
+            %
           </div>
         </div>
       </div>
