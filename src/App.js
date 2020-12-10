@@ -29,8 +29,10 @@ function App() {
       methods(value);
     } else if (value.match(isNumb)) {
       digits(value);
-    } else {
+    } else if (value === ".") {
       dot();
+    } else if (value === "%") {
+      perc();
     }
   };
 
@@ -55,6 +57,15 @@ function App() {
       a[1] !== "." && setA(a + ".");
     } else {
       b[1] !== "." && setB(b + ".");
+    }
+  };
+
+  const perc = () => {
+    setNumFlag(false);
+    if (numFlag) {
+      setA(a + "%");
+    } else {
+      setB(b + "%");
     }
   };
 
@@ -102,12 +113,12 @@ function App() {
           break;
         }
 
-        case "%": {
+        case action: {
           //Исправить %
-          setNumFlag(false);
-          const perc = a - (a / 100) * b;
-          setA(perc);
+          console.log(action);
           resetVar();
+          setNumFlag(false);
+
           break;
         }
 
@@ -194,7 +205,12 @@ function App() {
             /
           </div>
 
-          <div className="key key_perc dark_gray" onClick={() => setter("%")}>
+          <div
+            className="key key_perc dark_gray"
+            onClick={() => {
+              perc();
+            }}
+          >
             %
           </div>
         </div>
