@@ -15,7 +15,6 @@ function App() {
       "/",
       "*",
       "=",
-      "%", // Доля от предидущего числа
       "ac", //Очистить все
       "mc", //Очистить память
       "mr", //Прочитать память
@@ -30,9 +29,15 @@ function App() {
     } else if (value.match(isNumb)) {
       digits(value);
     } else if (value === ".") {
-      formating(".");
+      a[a.length - 1] !== "%" && formating(".");
+      if (numFlag) {
+        b[b.length - 1] !== "%" && formating(".");
+      }
     } else if (value === "%") {
-      formating("%");
+      a[a.length - 1] !== "." && formating("%");
+      if (numFlag) {
+        b[b.length - 1] !== "." && formating("%");
+      }
     }
   };
 
@@ -193,12 +198,7 @@ function App() {
             /
           </div>
 
-          <div
-            className="key key_perc dark_gray"
-            onClick={() => {
-              formating("%");
-            }}
-          >
+          <div className="key key_perc dark_gray" onClick={() => setter("%")}>
             %
           </div>
         </div>
