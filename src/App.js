@@ -30,9 +30,9 @@ function App() {
     } else if (value.match(isNumb)) {
       digits(value);
     } else if (value === ".") {
-      dot();
+      formating(".");
     } else if (value === "%") {
-      perc();
+      formating("%");
     }
   };
 
@@ -56,30 +56,16 @@ function App() {
     }
   };
 
-  const dot = () => {
+  const formating = (symbol) => {
     if (!numFlag) {
-      a[1] !== "." && setA(a + ".");
+      a.indexOf(symbol) === -1 && setA(a + symbol);
     } else {
-      b[1] !== "." && setB(b + ".");
+      b.indexOf(symbol) === -1 && setB(b + symbol);
     }
   };
 
-  const perc = () => {
-    if (!numFlag) {
-      if (a[a.length - 1] !== "%") {
-        setA(a + "%");
-      } else {
-        setA(a);
-      }
-    } else {
-      if (b[b.length - 1] !== "%") {
-        setB(b + "%");
-      } else {
-        setB(b);
-      }
-    }
-  };
-
+  //TODO: Исправить багу с точками после числа
+  //TODO: Конвертировать процент в число
   const methods = (value) => {
     if (value !== "=") {
       setNumFlag(true);
@@ -210,7 +196,7 @@ function App() {
           <div
             className="key key_perc dark_gray"
             onClick={() => {
-              perc();
+              formating("%");
             }}
           >
             %
