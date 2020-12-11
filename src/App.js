@@ -7,6 +7,7 @@ function App() {
   const [action, setAction] = useState(null);
   const [numFlag, setNumFlag] = useState(false);
   const [result, setResult] = useState(null);
+  const [memory, setMemory] = useState(null);
 
   const setter = (value) => {
     const operations = [
@@ -15,7 +16,6 @@ function App() {
       "/",
       "*",
       "=",
-      "ac", //Очистить все
       "mc", //Очистить память
       "mr", //Прочитать память
       "mMinus", //Вычитает значение в буфере из текщего значения на экране и сохраняет в буфер (результат по нажатию mr)
@@ -34,10 +34,15 @@ function App() {
         b[b.length - 1] !== "%" && formating(".");
       }
     } else if (value === "%") {
-      a[a.length - 1] !== "." && formating("%");
-      if (numFlag) {
-        b[b.length - 1] !== "." && formating("%");
+      if (a && a > 0) {
+        a[a.length - 1] !== "." && formating("%");
+        if (numFlag) {
+          b[b.length - 1] !== "." && formating("%");
+        }
       }
+    } else if (value === "ac") {
+      ac();
+    } else if (value === "mc") {
     }
   };
 
@@ -69,13 +74,29 @@ function App() {
     }
   };
 
-  //TODO: Исправить багу с точками после числа
-  //TODO: Конвертировать процент в число
+  const percentToNormalValue = () => {
+    if (checkPerc(a) === true && checkPerc(b) === false) {
+      setA(Number(parseInt(a) / 100));
+    } else if (checkPerc(a) === true && checkPerc(b) === true) {
+      setA(Number(parseInt(a) / 100));
+      setB(Number(parseInt(b) / 100));
+    } else if (checkPerc(a) === false && checkPerc(b) === true) {
+      setB((a / 100) * Number(parseInt(b)));
+    }
+
+    console.log(a, b);
+  };
+
+  const checkPerc = (num) => {
+    return String(num).indexOf("%") === -1 ? false : true;
+  };
+  percentToNormalValue();
   const methods = (value) => {
     if (value !== "=") {
       setNumFlag(true);
       setAction(value);
     }
+
     const newA = Number(a);
     const newB = Number(b);
 
@@ -115,10 +136,25 @@ function App() {
           break;
         }
 
+        case "ac": {
+          ac();
+
+          break;
+        }
+
         default:
           return 0;
       }
     }
+  };
+
+  const ac = () => {
+    setA(0);
+    setB(null);
+    setAction(null);
+    setNumFlag(false);
+    setResult(null);
+    console.log(a, b, action, numFlag, result);
   };
 
   const resetVar = () => {
@@ -200,6 +236,9 @@ function App() {
 
           <div className="key key_perc dark_gray" onClick={() => setter("%")}>
             %
+          </div>
+          <div className="key key_ac dark_gray" onClick={() => setter("ac")}>
+            AC
           </div>
         </div>
       </div>
