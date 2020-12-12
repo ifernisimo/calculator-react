@@ -46,7 +46,12 @@ function App() {
       setMemory(Number(memory) - Number(a));
     } else if (value === "mPlus") {
       setMemory(Number(memory) + Number(a));
-    } else if (value === "mPlus") {
+    } else if (value === "invert") {
+      if (!numFlag) {
+        a > 0 ? setA(-Math.abs(a)) : setA(Math.abs(a));
+      } else {
+        b > 0 ? setB(-Math.abs(b)) : setB(Math.abs(b));
+      }
     }
   };
 
