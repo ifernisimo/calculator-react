@@ -7,20 +7,12 @@ function App() {
   const [action, setAction] = useState(null);
   const [numFlag, setNumFlag] = useState(false);
   const [result, setResult] = useState(null);
-  const [memory, setMemory] = useState(null);
+  const [memory, setMemory] = useState(0);
+  const [memoryFlag, setMemoryFlag] = useState(false);
 
   const setter = (value) => {
-    const operations = [
-      "+",
-      "-",
-      "/",
-      "*",
-      "=",
-      "mc", //Очистить память
-      "mr", //Прочитать память
-      "mMinus", //Вычитает значение в буфере из текщего значения на экране и сохраняет в буфер (результат по нажатию mr)
-      "mPlus", //Аналогично только с суммированием
-    ];
+    console.log(a, b, result, memory);
+    const operations = ["+", "-", "/", "*", "="];
 
     const isNumb = RegExp(/^[0-9]+$/);
 
@@ -43,10 +35,23 @@ function App() {
     } else if (value === "ac") {
       ac();
     } else if (value === "mc") {
+      setMemory("0");
+    } else if (value === "mr") {
+      if (memory === 0) {
+        setMemory(a);
+      } else {
+        setMemoryFlag(!memoryFlag);
+      }
+    } else if (value === "mMinus") {
+      setMemory(Number(memory) - Number(a));
+    } else if (value === "mPlus") {
+      setMemory(Number(memory) + Number(a));
+    } else if (value === "mPlus") {
     }
   };
 
   const digits = (value) => {
+    setMemoryFlag(false);
     if (!numFlag) {
       if (a[1] !== ".") {
         if (a[a.length - 1] !== "%") {
@@ -83,8 +88,6 @@ function App() {
     } else if (checkPerc(a) === false && checkPerc(b) === true) {
       setB((a / 100) * Number(parseInt(b)));
     }
-
-    console.log(a, b);
   };
 
   const checkPerc = (num) => {
@@ -136,12 +139,6 @@ function App() {
           break;
         }
 
-        case "ac": {
-          ac();
-
-          break;
-        }
-
         default:
           return 0;
       }
@@ -149,12 +146,14 @@ function App() {
   };
 
   const ac = () => {
-    setA(0);
+    setA("0");
     setB(null);
     setAction(null);
     setNumFlag(false);
     setResult(null);
-    console.log(a, b, action, numFlag, result);
+    setMemory(0);
+    setMemoryFlag(false);
+    console.log(a, b, action, numFlag, result, memory);
   };
 
   const resetVar = () => {
@@ -167,12 +166,16 @@ function App() {
     <>
       <div className="calc">
         <span className="output">
-          {result ? (
-            result
+          {memoryFlag && <span className="memo">MEM</span>}
+          {memoryFlag === false ? (
+            <div>
+              <span>{a}</span>
+              <span>{action}</span>
+              <span>{b}</span>
+              <span>{result}</span>
+            </div>
           ) : (
-            <span>
-              {a} {action} {b}
-            </span>
+            <span>{memory}</span>
           )}
         </span>
         <div className="buttons">
@@ -239,6 +242,30 @@ function App() {
           </div>
           <div className="key key_ac dark_gray" onClick={() => setter("ac")}>
             AC
+          </div>
+          <div className="key key_mc dark_gray" onClick={() => setter("mc")}>
+            MC
+          </div>
+          <div className="key key_mr dark_gray" onClick={() => setter("mr")}>
+            MR
+          </div>
+          <div
+            className="key key_mMinus dark_gray"
+            onClick={() => setter("mMinus")}
+          >
+            M-
+          </div>
+          <div
+            className="key key_mPlus dark_gray"
+            onClick={() => setter("mPlus")}
+          >
+            M+
+          </div>
+          <div
+            className="key key_invert dark_gray"
+            onClick={() => setter("invert")}
+          >
+            +/-
           </div>
         </div>
       </div>
