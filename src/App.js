@@ -78,9 +78,9 @@ function App() {
 
   const formating = (symbol) => {
     if (!numFlag) {
-      a.indexOf(symbol) === -1 && setA(a + symbol);
+      String(a).indexOf(symbol) === -1 && setA(a + symbol);
     } else {
-      b.indexOf(symbol) === -1 && setB(b + symbol);
+      String(b).indexOf(symbol) === -1 && setB(b + symbol);
     }
   };
 
@@ -171,7 +171,7 @@ function App() {
     <>
       <div className="calc">
         <span className="output">
-          {memoryFlag && <span className="memo">MEM</span>}
+          {memoryFlag && <span className="memo">MEMORY</span>}
           {memoryFlag === false ? (
             <div>
               <span>{a}</span>
@@ -184,93 +184,101 @@ function App() {
           )}
         </span>
         <div className="buttons">
-          <div className="key key_0 dark_gray" onClick={() => setter("0")}>
-            0
-          </div>
-          <div className="key key_1 dark_gray" onClick={() => setter("1")}>
-            1
-          </div>
-          <div className="key key_2 dark_gray" onClick={() => setter("2")}>
-            2
-          </div>
-          <div className="key key_3 dark_gray" onClick={() => setter("3")}>
-            3
-          </div>
-          <div className="key key_4 dark_gray" onClick={() => setter("4")}>
-            4
-          </div>
-          <div className="key key_5 dark_gray" onClick={() => setter("5")}>
-            5
-          </div>
-          <div className="key key_6 dark_gray" onClick={() => setter("6")}>
-            6
-          </div>
-          <div className="key key_7 dark_gray" onClick={() => setter("7")}>
-            7
-          </div>
-          <div className="key key_8 dark_gray" onClick={() => setter("8")}>
-            8
-          </div>
-          <div className="key key_9 dark_gray" onClick={() => setter("9")}>
-            9
+          <div className="key key_ac gray" onClick={() => setter("ac")}>
+            AC
           </div>
 
-          <div
-            className="key key_multiply dark_gray"
-            onClick={() => setter("*")}
-          >
-            *
-          </div>
-          <div className="key key_plus dark_gray" onClick={() => setter("+")}>
-            +
-          </div>
-
-          <div className="key key_minus dark_gray" onClick={() => setter("-")}>
-            -
-          </div>
-
-          <div className="key key_result dark_gray" onClick={() => setter("=")}>
-            =
-          </div>
-          <div className="key key_dot dark_gray" onClick={() => setter(".")}>
-            .
-          </div>
-          <div
-            className="key key_separate dark_gray"
-            onClick={() => setter("/")}
-          >
+          <div className="key key_invert gray" onClick={() => setter("invert")}>
             /
           </div>
 
-          <div className="key key_perc dark_gray" onClick={() => setter("%")}>
+          <div className="key key_perc gray" onClick={() => setter("%")}>
             %
           </div>
-          <div className="key key_ac dark_gray" onClick={() => setter("ac")}>
-            AC
+
+          <div className="key key_separate orange" onClick={() => setter("/")}>
+            &divide;
           </div>
+
           <div className="key key_mc dark_gray" onClick={() => setter("mc")}>
-            MC
+            mc
           </div>
+
           <div className="key key_mr dark_gray" onClick={() => setter("mr")}>
-            MR
+            mr
           </div>
+
           <div
             className="key key_mMinus dark_gray"
             onClick={() => setter("mMinus")}
           >
-            M-
+            m-
           </div>
-          <div
-            className="key key_mPlus dark_gray"
-            onClick={() => setter("mPlus")}
-          >
-            M+
+
+          <div className="key key_mPlus orange" onClick={() => setter("mPlus")}>
+            m+
           </div>
+
+          <div className="key key_7 dark_gray" onClick={() => setter("7")}>
+            7
+          </div>
+
+          <div className="key key_8 dark_gray" onClick={() => setter("8")}>
+            8
+          </div>
+
+          <div className="key key_9 dark_gray" onClick={() => setter("9")}>
+            9
+          </div>
+
+          <div className="key key_multiply orange" onClick={() => setter("*")}>
+            *
+          </div>
+
+          <div className="key key_4 dark_gray" onClick={() => setter("4")}>
+            4
+          </div>
+
+          <div className="key key_5 dark_gray" onClick={() => setter("5")}>
+            5
+          </div>
+
+          <div className="key key_6 dark_gray" onClick={() => setter("6")}>
+            6
+          </div>
+
+          <div className="key key_minus orange" onClick={() => setter("-")}>
+            -
+          </div>
+
+          <div className="key key_1 dark_gray" onClick={() => setter("1")}>
+            1
+          </div>
+
+          <div className="key key_2 dark_gray" onClick={() => setter("2")}>
+            2
+          </div>
+
+          <div className="key key_3 dark_gray" onClick={() => setter("3")}>
+            3
+          </div>
+
+          <div className="key key_plus orange" onClick={() => setter("+")}>
+            +
+          </div>
+
           <div
-            className="key key_invert dark_gray"
-            onClick={() => setter("invert")}
+            className="key key_0 dark_gray long_key"
+            onClick={() => setter("0")}
           >
-            +/-
+            0
+          </div>
+
+          <div className="key key_dot dark_gray" onClick={() => setter(".")}>
+            .
+          </div>
+          <div className="key key_result orange" onClick={() => setter("=")}>
+            =
           </div>
         </div>
       </div>
