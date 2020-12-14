@@ -111,42 +111,31 @@ function App() {
     if (a && action && b) {
       setAction(value);
       switch (action) {
-        case "=": {
-          resetVar();
-          break;
-        }
-
         case "+": {
-          setNumFlag(false);
           setA(newA + newB);
-          resetVar();
           break;
         }
 
         case "-": {
-          setNumFlag(false);
           setA(newA - newB);
-          resetVar();
           break;
         }
 
         case "*": {
-          setNumFlag(false);
           setA(newA * newB);
-          resetVar();
           break;
         }
 
         case "/": {
-          setNumFlag(false);
           setA(newA / newB);
-          resetVar();
           break;
         }
 
         default:
           return 0;
       }
+      setNumFlag(false);
+      resetVar();
     }
   };
 
